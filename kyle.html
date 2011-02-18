@@ -1,0 +1,134 @@
+<!DOCTYPE html />
+<html lang="en">
+    <head>
+        <title>Kyle</title>
+        <script type="text/javascript">
+            function Skyline(canvas) {
+                this.canvas = canvas;
+                this.context = this.canvas.getContext('2d');
+                this.width = 0;
+                this.height = 0;
+                this.buildings = new Array();
+                this.numBuildings = 100;
+
+                this.loadBuildings = function(){
+                    for(var i=0; i<this.numBuildings; i++){
+                        this.buildings.push(new Building().init());
+                    }
+                }
+
+                this.init = function() {
+                    this.loadBuildings();
+                }
+
+                this.draw = function() {
+                    var c = this.context;
+                    c.fillStyle = "rgb(255,255,255)";
+                    c.fillRect(0, 0, this.width, this.height);
+                    for(var i in this.buildings){
+                        this.buildings[i].draw();
+                    }
+                }
+
+            }
+
+            function Base() {
+                this.classname = 'base';
+
+                this.init = function() {
+
+                }
+
+                this.update = function() {
+
+                }
+
+                this.draw = function() {
+
+                }
+            }
+
+            //Building.prototype = new Base;
+            function Building() {
+                
+                this.classname = 'building';
+                this.height = 0;
+                this.width = 0;
+                this.xAxis = 0;
+                this.color = 0;
+                this.rgbMin = 0;
+                this.rgbMax = 100;
+
+                this.init = function() {
+                    this.setRandomHeight();
+                    this.setRandomWidth();
+                    this.setRandomXAxis();
+                    //set random color
+                    this.color = Math.floor(Math.random()*(this.rgbMax-this.rgbMin)+this.rgbMin)
+                    return this;
+                }
+
+                this.setRandomHeight = function() {
+                    this.height = Math.random()*(0.8-0.2)+0.2;
+                }
+
+                this.setRandomWidth = function() {
+                    this.width = 5;
+                }
+
+                this.setRandomGap = function() {
+                    this.leftGap = Math.floor(Math.random()*6);
+                }
+
+                this.setRandomXAxis = function() {
+                    //this.xAxis = ((Math.random()*2-1)/2)+0.5;
+                    this.xAxis = Math.pow((Math.random()-0.5), 2)+0.5;
+
+                }
+
+                this.draw = function() {
+                    var c = skyline.context;
+                    c.fillStyle = "rgb("+this.color+","+this.color+","+this.color+")";
+                    c.fillRect(this.xAxis*skyline.width,skyline.height,this.width,Math.floor(this.height*-skyline.height));
+                }
+            }
+
+            function init() {
+                var canvas = document.getElementById('skyline');
+                canvas.width = document.body.clientWidth;
+                skyline = new Skyline(canvas);
+                skyline.init();
+                skyline.width = canvas.width;
+                skyline.height = parseInt(canvas.getAttribute('height'));
+                skyline.draw();
+                //run();
+            }
+
+            function run() {
+                update();
+                setTimeout('run()', 30);
+            }
+
+            function draw() {
+                
+            }
+
+            function update() {
+                draw();
+            }
+        </script>
+        <style type="text/css">
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            canvas {
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body onload="init();">
+        <canvas id="skyline" height="525px"></canvas>
+    </body>
+</html>
