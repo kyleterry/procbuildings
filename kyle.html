@@ -56,8 +56,8 @@
                 this.width = 0;
                 this.xAxis = 0;
                 this.color = 0;
-                this.rgbMin = 0;
-                this.rgbMax = 100;
+                this.rgbMin = 20;
+                this.rgbMax = 23;
 
                 this.init = function() {
                     this.setRandomHeight();
@@ -73,7 +73,7 @@
                 }
 
                 this.setRandomWidth = function() {
-                    this.width = 5;
+                    this.width = 70;
                 }
 
                 this.setRandomGap = function() {
@@ -81,8 +81,12 @@
                 }
 
                 this.setRandomXAxis = function() {
-                    //this.xAxis = ((Math.random()*2-1)/2)+0.5;
-                    this.xAxis = Math.pow((Math.random()-0.5), 2)+0.5;
+                    //this.xAxis = ((vMath.random()*2-1)/2)+0.5;
+                    var max = 1;
+                    var min = -1;
+                    var x = Math.random()*(max-min)+min;
+                    //this.xAxis = x*Math.pow(Math.abs(x),1)+0.5;
+                    this.xAxis = (-x/((Math.pow(x,2)+Math.sqrt(2))*(Math.pow(x,2)-Math.sqrt(2)))+1)/2;
 
                 }
 
